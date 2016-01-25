@@ -63,5 +63,4 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
     //Ok(views.html.index(json))
     Ok(views.html.index(form))
   }
-
 }
