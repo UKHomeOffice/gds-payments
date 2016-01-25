@@ -27,14 +27,16 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
   def start = Action.async { implicit request =>
     implicit val wsClient = NingWSClient()
 
+    val reference = UUID.randomUUID.toString
+
     form.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.index(formWithErrors))),
       hitForm => {
         val body = Json.obj(
-          "return_url" -> s"${routes.Payments.created().absoluteURL}",
+          "return_url" -> s"${routes.Payments.created(reference).absoluteURL}",
           "account_id" -> "789",
           "description" -> hitForm.hit,
-          "reference" -> UUID.randomUUID.toString,
+          "reference" -> reference,
           "amount" -> hitForm.amountInPence
         )
 
@@ -42,6 +44,7 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
           .withHeaders("Content-Type" -> "application/json",
                        "Authorization" -> "Bearer 58fb8c50-1617-4489-adfe-db51451af0ca").post(body).map { response =>
           if (response.status == 201) {
+            println(Json.prettyPrint(response.json))
             Redirect(((response.json \ "links")(1) \ "href").as[String])
           } else {
             Redirect(routes.Payments.error(Json.prettyPrint(response.json)), 400)
@@ -51,8 +54,8 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
     )
   }
 
-  def created = Action {
-    println(s"HELP")
+  def created(reference: String) = Action { request =>
+    println(s"HELP me $reference")
     Ok(views.html.index(form))
   }
 

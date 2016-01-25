@@ -5,7 +5,7 @@
 # Home page
 GET     /                           controllers.Payments.index
 POST    /pay                        controllers.Payments.start
-GET     /created                    controllers.Payments.created
+GET     /created/:reference         controllers.Payments.created(reference: String)
 GET     /error                      controllers.Payments.error(json: String)
 
 # Map static resources from the /public folder to the /assets URL path
