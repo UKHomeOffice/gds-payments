@@ -1,0 +1,9 @@
+@(form: Form[HitForm])(implicit messages: Messages)
+
+@main("Welcome to Pay") {
+    @helper.form(action = routes.Payments.start()) {
+        @helper.inputText(form("hit"))
+        @helper.inputText(form("amountInPence"))
+        <input type="submit" value="Submit" />
+    }
+}

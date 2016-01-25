@@ -1,0 +1,12 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Payments.index
+POST    /pay                        controllers.Payments.start
+GET     /created                    controllers.Payments.created
+GET     /error                      controllers.Payments.error(json: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
