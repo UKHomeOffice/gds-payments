@@ -23,7 +23,7 @@ require 'yaml'
     profile['browser.cache.disk.enable'] = false
     profile['browser.cache.memory.enable'] = false
     Capybara::Selenium::Driver.new(app, :browser => :firefox, :profile => profile)
-#   end
+  end
 # else
 #   Capybara.run_server = false
 #   Capybara.default_driver = :poltergeist

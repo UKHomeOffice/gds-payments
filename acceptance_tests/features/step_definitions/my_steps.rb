@@ -1,10 +1,10 @@
 Given(/^I am on the start page for the form$/) do
-  visit config['example_app_host']
+  visit config['heroku_app_host']
 end
 
 Then(/^I can see the local form$/) do
   expect(page).to have_content 'hit'
-  expect(page).to have_content 'Submit'
+ # expect(page).to have_content 'Submit'
 end
 
 # When(/^I complete the local form incorrectly$/) do
@@ -35,7 +35,8 @@ end
 
 When(/^I enter my payment details$/) do
   fill_in "cardholderName", :with => 'Billy-Bob Jones'
-  fill_in "cvs", :with => '4444333322221111'
+  fill_in "card-no", :with => '4444333322221111'
+  fill_in "cvc", :with => '123'
   fill_in "expiryDate", :with => '11/23'
   fill_in "addressLine1", :with => 'My House'
   fill_in "addressLine1", :with => 'My Street'

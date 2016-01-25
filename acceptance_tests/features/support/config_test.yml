@@ -1,1 +1,2 @@
 example_app_host: 'http://localhost:9000/'
+heroku_app_host: 'http://govpay.herokuapp.com/'
