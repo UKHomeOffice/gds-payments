@@ -40,10 +40,8 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
 
         wsClient.url(s"https://publicapi-integration-1.pymnt.uk/v1/payments")
           .withHeaders("Content-Type" -> "application/json",
-            "Authorization" -> "Bearer 58fb8c50-1617-4489-adfe-db51451af0ca").post(body).map { response =>
-          println(s"status: ${response.status}\nbody: ${response.json}")
+                       "Authorization" -> "Bearer 58fb8c50-1617-4489-adfe-db51451af0ca").post(body).map { response =>
           if (response.status == 201) {
-            println(s"Redirecting to: ${((response.json \ "links")(1) \ "href").as[String]}")
             Redirect(((response.json \ "links")(1) \ "href").as[String])
           } else {
             Redirect(routes.Payments.error(Json.prettyPrint(response.json)), 400)
@@ -54,6 +52,7 @@ class Payments @Inject()(val messagesApi: MessagesApi) extends Controller with I
   }
 
   def created = Action {
+    println(s"HELP")
     Ok(views.html.index(form))
   }
 
